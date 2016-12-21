@@ -13,6 +13,7 @@
         
         try{
                     size = 0;
+                    // connection to the database and retrieval of data
                     db_connect = new db_connect();
                     db_connect.connect_to_db();
                     
@@ -22,10 +23,11 @@
                     System.out.println(stmt);
                     resultset = stmt.executeQuery(); 
                     
-                    if(search.equals("")){
-                        start_frame();      
-                    }else if(!resultset.isBeforeFirst()){
-                        initialize_numbers(false);
+                    // display of the results retrieved from the database
+                    if(search.equals("")){  
+                        start_frame();  // if the txt_field_search is empty, populate the frame with the initialized values
+                    }else if(!resultset.isBeforeFirst()){   // if the resultset returned is empty execute this part
+                        initialize_numbers(false);  // method in the main program to initialize the numbers for pagination
                         String[] column_name = {"SN", "Barcode", "Itemcode", "  Item   ", "Selling price", 
                                         "Cost price", "Quantity", "CategoryID", "SupplyName"};
                         model1 = (DefaultTableModel) jTable1.getModel();
@@ -34,6 +36,7 @@
                         int colNo = column_name.length;
                         Object[] objects = new Object[colNo];
                         String column_four = "";
+                        //  this logic displays item not found in the middle of the frame targetting the column in the middle
                         for(int i=0;i<colNo;i++){
                          objects[i]="";
                          if(i == 4){
@@ -41,10 +44,12 @@
                              objects[i]= column_four;
                          }
                         }
+                        // displays the "item was not found" on the frame
                         jTable1.getColumnModel().getColumn(4).setPreferredWidth(250);
                          model1.addRow(objects);
                          jTable1.setModel(model1);
                     }else{
+                       // if the resultset returned is not empty execute this part
                        String[] column_name = {"SN", "Barcode", "Itemcode", "  Item   ", "Selling price", 
                                         "Cost price", "Quantity", "CategoryID", "SupplyName"};
                     model1 = (DefaultTableModel) jTable1.getModel();
@@ -71,6 +76,7 @@
                     } 
                     }
                 }catch(SQLException err){
+                    // displays error if the database connection fails
                     System.out.println("error: " + err.getMessage());
                 }
 }
