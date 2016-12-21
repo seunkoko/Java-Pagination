@@ -23,7 +23,7 @@
                     resultset = stmt.executeQuery(); 
                     
                     if(search.equals("")){
-                        start_frame();      // displays empty frame
+                        start_frame();      
                     }else if(!resultset.isBeforeFirst()){
                         initialize_numbers(false);
                         String[] column_name = {"SN", "Barcode", "Itemcode", "  Item   ", "Selling price", 
